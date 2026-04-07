@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "rootDir": "src", // all your .ts source files
+    "outDir": "dist", // compiled output goes here
+    "target": "ESNext", // modern JS features
+    "module": "NodeNext", // Node.js ESM support
+    "moduleResolution": "NodeNext",
+    "esModuleInterop": true, // allow default imports from CJS
+    "strict": true, // full type safety
+    "sourceMap": true, // generate .map files
+    "declaration": true, // generate .d.ts files
+    "declarationMap": true, // link .d.ts to source maps
+    "skipLibCheck": true // faster builds, ignore lib type errors
+  },
+  "include": ["src"], // only compile files in src/
+  "exclude": ["node_modules", "dist"] // ignore build output and deps
+}
