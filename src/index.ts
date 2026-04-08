@@ -6,16 +6,7 @@ dotenv.config();
 
 import { setBotReady } from "./lib/server.js";
 
-import {
-  Client,
-  Events,
-  GatewayIntentBits,
-  EmbedBuilder,
-  ActionRowBuilder,
-  ButtonBuilder,
-  ButtonStyle,
-  MessageFlags,
-} from "discord.js";
+import { Client, Events, GatewayIntentBits } from "discord.js";
 import { getLogger } from "./lib/pino.log.js";
 import CatVoice from "./modules/Cat/CatVoice.js";
 
