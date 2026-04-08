@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, EmbedBuilder } from "discord.js";
+import { ChatInputCommandInteraction } from "discord.js";
 import { getLogger } from "../../lib/pino.log.js";
 import {
   rpsON,
@@ -9,9 +9,7 @@ import {
   RPSChoices,
   CLEAR_RPS_ARRAY,
 } from "../../global/variables.global.js";
-import { chunkArray } from "../../global/helper.global.js";
 import { GameDetails } from "../../lib/interface/GameDetails.js";
-import VictoryConditionRPS from "./utils/VictoryConditionRPS.js";
 import EmbedGame from "./utils/EmbedGame.js";
 
 const logger = getLogger(import.meta);
