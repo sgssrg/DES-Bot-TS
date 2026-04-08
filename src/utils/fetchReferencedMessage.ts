@@ -1,5 +1,5 @@
-import { getLogger } from "../lib/pino.log.js";
 import type { Message } from "discord.js";
+import { getLogger } from "../lib/pino.log.js";
 const logger = getLogger(import.meta);
 const fetchReferencedMessage = async (message: Message) => {
   try {

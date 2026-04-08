@@ -26,6 +26,10 @@ const TranslatorChoice = process.env.TRANSLATOR_CHOICE || 0;
 import LingvaTranslate from "./modules/Translater/LingvaTranslate.js";
 import LibreTranslate from "./modules/Translater/LibreTranslate.js";
 import RedeemMessageHandler from "./modules/Redeem/RedeemMessageHandler.js";
+import RedeemInteractionHandler from "./modules/Redeem/RedeemInteractionHandler.js";
+import { setBT } from "./modules/BT/BT.js";
+import Dice from "./modules/Games/Dice.js";
+import RPS from "./modules/Games/RPS.js";
 
 const client = new Client({
   intents: [
@@ -135,5 +139,25 @@ client.on(Events.MessageCreate, async (message) => {
     }
   }
 });
-
-setBotReady(true);
+client.on(Events.InteractionCreate, async (interaction) => {
+  try {
+    if (interaction.isChatInputCommand()) {
+      switch (interaction.commandName) {
+        case "set-bt":
+          setBT(interaction);
+          break;
+        case "redeem":
+          RedeemInteractionHandler(interaction);
+          break;
+        case "rps":
+          RPS(interaction);
+          break;
+        case "dice":
+          Dice(interaction);
+          break;
+      }
+    }
+  } catch (error) {
+    logger.warn(error);
+  }
+});

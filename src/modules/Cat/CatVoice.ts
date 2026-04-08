@@ -1,4 +1,4 @@
-import { msgCatVoice } from "../../global/variables.js";
+import { msgCatVoice } from "../../global/variables.global.js";
 import type { Message } from "discord.js";
 const CatVoice = async (message: Message) => {
   const catVoiceRegex: RegExp =

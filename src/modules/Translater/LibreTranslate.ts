@@ -2,7 +2,6 @@ import fetchReferencedMessage from "../../utils/fetchReferencedMessage.js";
 import { getLogger } from "../../lib/pino.log.js";
 
 const logger = getLogger(import.meta);
-import axios from "axios";
 import { Message } from "discord.js";
 
 import { LibreT } from "../../lib/axios.js";

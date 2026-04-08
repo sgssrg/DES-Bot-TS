@@ -1,6 +1,5 @@
 import { Message } from "discord.js";
 import { getLogger } from "../../lib/pino.log.js";
-import { EmbedBuilder } from "discord.js";
 import { prisma } from "../../lib/prisma.js";
 import EmbedRedeem from "./utils/EmbedRedeem.js";
 import fetchPlayerDetails from "./utils/fetchPlayerDetails.js";
