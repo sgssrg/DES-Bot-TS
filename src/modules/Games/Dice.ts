@@ -16,6 +16,7 @@ import {
   INVERSE_DICE_STATUS,
   msgCatVoice,
   ROLL_DICE,
+  DICE_ROLL_ANIMATION,
 } from "../../global/variables.global.js";
 import { MiniGamePlayer } from "../../lib/interface/MiniGamePlayer.js";
 import EmbedGame from "./utils/EmbedGame.js";
@@ -132,6 +133,16 @@ const joinDice = async (interaction: ChatInputCommandInteraction) => {
 const playDice = async (interaction: ChatInputCommandInteraction) => {
   ROLL_DICE();
 
+  let rollEmbed = new EmbedBuilder();
+
+  rollEmbed
+    .setTitle(`The Dice rolled ${diceVal}`)
+    .setDescription("THE GREAT " + diceVal)
+    .setImage(DICE_ROLL_ANIMATION[diceVal - 1])
+    .setAuthor({ name: "DES-1405" });
+
+  await interaction.editReply({ embeds: [rollEmbed] });
+
   // now handleing victory
   // 1st Case strighforward victory
   let instaWIN = playersDice.filter((p) => p.diceNo === diceVal);
@@ -141,7 +152,7 @@ const playDice = async (interaction: ChatInputCommandInteraction) => {
   }
   if (instaWIN.length > 0) {
     let reply = await EmbedGame(1, 1, instaWIN, 0);
-    await interaction.editReply({ embeds: reply });
+    await interaction.followUp({ embeds: reply });
   }
 
   let closestUsers: DiceGameDetails[] = playersDice.map((p) => ({
@@ -157,7 +168,7 @@ const playDice = async (interaction: ChatInputCommandInteraction) => {
     interaction.channel instanceof TextChannel &&
     interaction.channel.isSendable()
   ) {
-    return await interaction.editReply("No predictions were made!");
+    return await interaction.followUp("No predictions were made!");
   }
 
   if (
@@ -167,7 +178,7 @@ const playDice = async (interaction: ChatInputCommandInteraction) => {
     interaction.channel.isSendable()
   ) {
     let reply = await EmbedGame(1, 1, closestUsers, 1);
-    return await interaction.editReply({ embeds: reply });
+    return await interaction.followUp({ embeds: reply });
   }
 
   if (
@@ -179,10 +190,10 @@ const playDice = async (interaction: ChatInputCommandInteraction) => {
     const minDiff = closestUsers[0].diff;
     const tiedUsers = closestUsers.filter((user) => user.diff === minDiff);
     let reply = await EmbedGame(1, 1, tiedUsers, 2);
-    return await interaction.editReply({ embeds: reply });
+    return await interaction.followUp({ embeds: reply });
   } else {
     let reply = await EmbedGame(1, 1, closestUsers, 3);
-    return await interaction.editReply({ embeds: reply });
+    return await interaction.followUp({ embeds: reply });
   }
 };
 const deleteDice = async (interaction: ChatInputCommandInteraction) => {
