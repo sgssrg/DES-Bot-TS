@@ -33,4 +33,4 @@ COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
 # Prisma needs schema for migrations (optional if you run migrate separately)
 COPY --from=builder /app/prisma ./prisma
 
-CMD ["node", "dist/index.js"]
+CMD ["sh", "-c", "pnpm prisma migrate deploy && node dist/index.js"]

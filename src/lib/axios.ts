@@ -1,12 +1,12 @@
 import axios, { AxiosInstance } from "axios";
 
 const LingvaT: AxiosInstance = axios.create({
-  baseURL: process.env.LINGVA_URL || "http://localhost:8081/api/",
+  baseURL: process.env.LINGVA_URL || "http://lingvatranslate:3000/api/",
   headers: { "Content-Type": "application/json" },
 });
 
 const LibreT: AxiosInstance = axios.create({
-  baseURL: process.env.LIBRE_URL || "http://localhost:8082",
+  baseURL: process.env.LIBRE_URL || "http://libretranslate:5000",
   headers: { "Content-Type": "application/json" },
 });
 const KS_NET: AxiosInstance = axios.create({
