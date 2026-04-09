@@ -2,7 +2,7 @@ name: Publish Docker image to GHCR
 
 on:
   push:
-    branches: ["main"] # or whichever branch you want to trigger on
+    branches: ["main"]
 
 jobs:
   build-and-push:
@@ -10,7 +10,7 @@ jobs:
 
     permissions:
       contents: read
-      packages: write # needed to push to GHCR
+      packages: write
 
     steps:
       - name: Checkout repository
@@ -24,11 +24,13 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
-          password: ${{ secrets.GH_T }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}:latest
+          tags: |
+            ghcr.io/sgssrg/des-bot-ts:latest
+            ghcr.io/sgssrg/des-bot-ts:${{ github.sha }}
