@@ -1,0 +1,88 @@
+services:
+  bot:
+    container_name: des-1405
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "0.0.0.0:8080:3000"
+    environment:
+      - NODE_ENV=production
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - CLIENT_ID=${CLIENT_ID}
+      - RPS_CHANNEL=${RPS_CHANNEL}
+      - BT1_ROLL_ID=${BT1_ROLL_ID}
+      - BT2_ROLL_ID=${BT2_ROLL_ID}
+      - BT_CHANNEL=${BT_CHANNEL}
+      - DICE_CHANNEL=${DICE_CHANNEL}
+      - DATABASE_URL=${DATABASE_URL}
+      - REDEEM_CHANNEL=${REDEEM_CHANNEL}
+      - BT1_HOUR=${BT1_HOUR}
+      - BT2_HOUR=${BT2_HOUR}
+      - BT1_MINUTE=${BT1_MINUTE}
+      - BT2_MINUTE=${BT2_MINUTE}
+      - TranslatorChoice=${TranslatorChoice}
+      - NOTIFY_BT_BEFORE_TIME=${NOTIFY_BT_BEFORE_TIME}
+      - REDEEM_TIME_HOUR=${REDEEM_TIME_HOUR}
+      - REDEEM_TIME_MINUTE=${REDEEM_TIME_MINUTE}
+    restart: unless-stopped
+    networks:
+      - connected
+    depends_on:
+      - lingvatranslate
+      - libretranslate
+
+  lingvatranslate:
+    container_name: lingvatranslate
+    image: thedaviddelta/lingva-translate:latest
+    restart: always
+    ports:
+      - "0.0.0.0:8081:3000"
+    networks:
+      - connected
+    environment:
+      - default_target_lang=en
+      - default_source_lang=auto
+      - force_default_theme=dark
+  libretranslate:
+    container_name: libretranslate
+    image: libretranslate/libretranslate:latest
+    restart: always
+    ports:
+      - "0.0.0.0:8082:5000"
+    environment:
+      - LT_DEFAULT_TO=en
+      - LT_DEFAULT_FROM=auto
+      - LT_UPDATE_MODELS=true
+      - LT_MODEL_DOWNLOAD=true
+      - LT_TIMEOUT=60
+      - LT_LOG_LEVEL=info
+      - LT_CACHE_DIR=/app/lt_cache
+      - LT_MODEL_DIR=/app/models
+      - LT_MODEL_DOWNLOAD_THREADS=6=value
+    healthcheck:
+      test: ["CMD-SHELL", "./venv/bin/python scripts/healthcheck.py"]
+      interval: 10s
+      timeout: 4s
+      retries: 4
+      start_period: 5s
+    volumes:
+      - lt-local:/home/libretranslate/.local
+    networks:
+      - connected
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 512M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+
+volumes:
+  lt-local:
+    external: true
+
+networks:
+  connected:
+    driver: bridge

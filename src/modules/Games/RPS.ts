@@ -13,9 +13,9 @@ import { RPSGameDetails } from "../../lib/interface/GameDetails.js";
 import EmbedGame from "./utils/EmbedGame.js";
 
 const logger = getLogger(import.meta);
-const { RPS_C } = process.env;
+const { RPS_CHANNEL } = process.env;
 const isRPSChannel = (channelId: string) => {
-  return channelId === RPS_C;
+  return channelId === RPS_CHANNEL;
 };
 const RPS = async (interaction: ChatInputCommandInteraction) => {
   logger.trace("RPS Triggered");
@@ -87,7 +87,7 @@ export default RPS;
 
 const createRPS = async (interaction: ChatInputCommandInteraction) => {
   logger.info("RPS Game Enrollment Started!");
-  logger.trace(`Current RPS Channel: ${RPS_C}`);
+  logger.trace(`Current RPS Channel: ${RPS_CHANNEL}`);
   INVERSE_RPS_STATUS();
   return await interaction.editReply(
     `Let's Play Rock, Paper, Scissors!! ${msgCatVoice[Math.floor(Math.random() * msgCatVoice.length)]}!!!!`,

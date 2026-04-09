@@ -5,7 +5,7 @@ import {
 } from "discord.js";
 import { getLogger } from "../../lib/pino.log.js";
 const logger = getLogger(import.meta);
-const { DICE_C } = process.env;
+const { DICE_CHANNEL } = process.env;
 
 import {
   diceON,
@@ -22,7 +22,7 @@ import { MiniGamePlayer } from "../../lib/interface/MiniGamePlayer.js";
 import EmbedGame from "./utils/EmbedGame.js";
 import { DiceGameDetails } from "../../lib/interface/GameDetails.js";
 const isDiceChannel = (channelId: string) => {
-  return channelId === DICE_C;
+  return channelId === DICE_CHANNEL;
 };
 const Dice = async (interaction: ChatInputCommandInteraction) => {
   await interaction.deferReply(); // AS soon we get Defer it
@@ -51,7 +51,7 @@ const Dice = async (interaction: ChatInputCommandInteraction) => {
         }
         if (diceON && !isDiceChannel(currentChannelId)) {
           return await interaction.editReply(
-            `A game is currently in session go to <#${DICE_C}>! and use /dice what:Join A Game? to join the game and add prediction if you want or get a randomized prediction!`,
+            `A game is currently in session go to <#${DICE_CHANNEL}>! and use /dice what:Join A Game? to join the game and add prediction if you want or get a randomized prediction!`,
           );
         }
         if (diceON && isDiceChannel(currentChannelId)) {
@@ -99,7 +99,7 @@ const Dice = async (interaction: ChatInputCommandInteraction) => {
 
 const createDice = async (interaction: ChatInputCommandInteraction) => {
   logger.info("Closest Guess Game Enrollment Started!");
-  logger.trace(`Current RPS Channel: ${DICE_C}`);
+  logger.trace(`Current RPS Channel: ${DICE_CHANNEL}`);
   INVERSE_DICE_STATUS();
   return await interaction.editReply(
     `Let's Play Rock, Paper, Scissors!! ${msgCatVoice[Math.floor(Math.random() * msgCatVoice.length)]}!!!!`,

@@ -21,6 +21,8 @@ import RedeemInteractionHandler from "./modules/Redeem/RedeemInteractionHandler.
 import { setBT } from "./modules/BT/BT.js";
 import Dice from "./modules/Games/Dice.js";
 import RPS from "./modules/Games/RPS.js";
+import AutoRedeem from "./modules/Redeem/AutoRedeem.js";
+import CatVoiceI from "./modules/Cat/CatVoiceI.js";
 
 const client = new Client({
   intents: [
@@ -36,7 +38,7 @@ client.login(String(process.env.DISCORD_TOKEN)).catch((err) => {
 client.once(Events.ClientReady, (readyClient) => {
   setBotReady(true); // Update the bot status to ready
   logger.info(`Ready! Logged in as ${readyClient.user.tag}`);
-  //   AutoRedeem(client); ==> AutoRedeem Scripts
+  AutoRedeem(client); // ==> AutoRedeem Scripts
 });
 
 client.on(Events.MessageCreate, async (message) => {
@@ -134,6 +136,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
   try {
     if (interaction.isChatInputCommand()) {
       switch (interaction.commandName) {
+        case "purr":
+          CatVoiceI(interaction);
+          break;
         case "set-bt":
           setBT(interaction);
           break;

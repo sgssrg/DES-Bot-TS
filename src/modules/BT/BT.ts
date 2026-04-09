@@ -49,19 +49,29 @@ export const setBT = async (interaction: ChatInputCommandInteraction) => {
     await interaction.editReply(`Bear Trap ${trapValue} has been set!`);
 
     if (trapValue === 1) {
-      const firstDelayBT1 = referenceUTCBT1.getTime() - Date.now();
+      const firstDelayBT1 = normalizeDelay(
+        referenceUTCBT1.getTime() - Date.now(),
+      );
       setTimeout(() => {
         triggerTrap(1, interaction);
-        setInterval(() => triggerTrap(1, interaction), 48 * 60 * 60 * 1000);
+        setInterval(() => triggerTrap(1, interaction), 20000); //48 * 60 * 60 * 1000
       }, firstDelayBT1);
     }
 
     if (trapValue === 2) {
-      const firstDelayBT2 = referenceUTCBT2.getTime() - Date.now();
+      const firstDelayBT2 = normalizeDelay(
+        referenceUTCBT2.getTime() - Date.now(),
+      );
       setTimeout(() => {
         triggerTrap(2, interaction);
-        setInterval(() => triggerTrap(2, interaction), 48 * 60 * 60 * 1000);
+        setInterval(() => triggerTrap(2, interaction), 20000);
       }, firstDelayBT2);
     }
   }
+};
+const normalizeDelay = (delay: number, cycleHours = 48) => {
+  if (delay <= 0) {
+    return delay + cycleHours * 60 * 60 * 1000;
+  }
+  return delay;
 };
