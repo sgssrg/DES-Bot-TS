@@ -1,8 +1,21 @@
 import { MiniGamePlayer } from "./MiniGamePlayer.js";
 
-interface GameDetails {
+interface RPSGameDetails {
   player: MiniGamePlayer;
   choiceIndex: number;
   victory: boolean;
 }
-export { GameDetails };
+interface DiceGameDetails {
+  player: MiniGamePlayer;
+  diceNo: number;
+  diff?: number;
+  winType?: number;
+}
+interface ClosestDiceGameDetails {
+  player: MiniGamePlayer;
+  diceNo: number;
+  diff?: number;
+  winType?: number;
+}
+
+export { RPSGameDetails, DiceGameDetails, ClosestDiceGameDetails };

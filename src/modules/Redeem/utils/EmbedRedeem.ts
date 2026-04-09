@@ -105,9 +105,7 @@ const EmbedRedeem = async (
         });
         logger.trace(`${redeemStatus.total} | `);
         embed.setDescription(
-          `Redeeming GiftCodes for ${redeemStatus.total} --> ${
-            logBatch * data.length
-          }-${logBatch * data.length} and Code (${code})\n\n\`\`\`\n${redeemTable.toString()}\n\`\`\``,
+          `Redeeming GiftCodes for ${logBatch + 1}-${logBatch + data.length} and Code (${code})\n\n\`\`\`\n${redeemTable.toString()}\n\`\`\``,
         );
 
         embed.addFields(

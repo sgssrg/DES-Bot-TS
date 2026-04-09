@@ -9,7 +9,7 @@ import {
   RPSChoices,
   CLEAR_RPS_ARRAY,
 } from "../../global/variables.global.js";
-import { GameDetails } from "../../lib/interface/GameDetails.js";
+import { RPSGameDetails } from "../../lib/interface/GameDetails.js";
 import EmbedGame from "./utils/EmbedGame.js";
 
 const logger = getLogger(import.meta);
@@ -111,10 +111,10 @@ const joinRPS = async (interaction: ChatInputCommandInteraction) => {
 };
 
 const playRPS = async (interaction: ChatInputCommandInteraction) => {
-  if (playersRPS.length > 2) {
+  if (playersRPS.length >= 2) {
     const pNAME = interaction.user?.displayName;
     logger.trace(pNAME);
-    let playerRoll: GameDetails[] = [];
+    let playerRoll: RPSGameDetails[] = [];
     for (const player of playersRPS) {
       let choiceIndex = Math.floor(Math.random() * RPSChoices.length);
       playerRoll.push({ player, choiceIndex, victory: false });

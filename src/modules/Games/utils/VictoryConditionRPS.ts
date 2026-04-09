@@ -1,8 +1,8 @@
 import { pathToFileURL } from "node:url";
-import { GameDetails } from "../../../lib/interface/GameDetails.js";
+import { RPSGameDetails } from "../../../lib/interface/GameDetails.js";
 import { getLogger } from "../../../lib/pino.log.js";
 const logger = getLogger(import.meta);
-const VictoryConditionRPS = (data: GameDetails[]) => {
+const VictoryConditionRPS = (data: RPSGameDetails[]) => {
   for (let playerCI = 1; playerCI < data.length; playerCI++) {
     const playerC = data[playerCI];
     const playerR = data[playerCI - 1];

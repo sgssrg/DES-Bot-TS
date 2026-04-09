@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "tsc",
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "reload": "node ./command.js"
   },
   "keywords": [],
   "author": "",
