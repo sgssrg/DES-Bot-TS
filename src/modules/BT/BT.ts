@@ -26,7 +26,7 @@ export const setBT = async (interaction: ChatInputCommandInteraction) => {
     const referenceUTCBT1 = new Date();
     referenceUTCBT1.setUTCHours(
       Number(BT1_HOUR),
-      Number(BT1_MINUTE) - Number(NOTIFY_BT_BEFORE_TIME),
+      Number(BT1_MINUTE) - Number(NOTIFY_BT_BEFORE_TIME || 10),
       0,
       0,
     );
@@ -34,7 +34,7 @@ export const setBT = async (interaction: ChatInputCommandInteraction) => {
     const referenceUTCBT2 = new Date();
     referenceUTCBT2.setUTCHours(
       Number(BT2_HOUR),
-      Number(BT2_MINUTE) - Number(NOTIFY_BT_BEFORE_TIME),
+      Number(BT2_MINUTE) - Number(NOTIFY_BT_BEFORE_TIME || 10),
       0,
       0,
     );
@@ -54,7 +54,7 @@ export const setBT = async (interaction: ChatInputCommandInteraction) => {
       );
       setTimeout(() => {
         triggerTrap(1, interaction);
-        setInterval(() => triggerTrap(1, interaction), 20000); //48 * 60 * 60 * 1000
+        setInterval(() => triggerTrap(1, interaction), 48 * 60 * 60 * 1000); //48 * 60 * 60 * 1000
       }, firstDelayBT1);
     }
 
@@ -64,7 +64,7 @@ export const setBT = async (interaction: ChatInputCommandInteraction) => {
       );
       setTimeout(() => {
         triggerTrap(2, interaction);
-        setInterval(() => triggerTrap(2, interaction), 20000);
+        setInterval(() => triggerTrap(2, interaction), 48 * 60 * 60 * 1000);
       }, firstDelayBT2);
     }
   }

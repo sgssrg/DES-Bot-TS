@@ -34,3 +34,6 @@ COPY --from=builder /app/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=builder /app/prisma ./prisma
 
 CMD ["node", "dist/index.js"]
+
+COPY ./docker-entrypoint.sh /docker-entrypoint.sh
+ENTRYPOINT ["/docker-entrypoint.sh"]
