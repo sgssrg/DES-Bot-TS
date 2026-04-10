@@ -17,7 +17,7 @@ function triggerTrap(BTNumber: number, interaction: Interaction) {
       })
       .setTitle(`${BTNumber === 1 ? "BT1" : "BT2"} is active!`)
       .setDescription(
-        `<@&${BTNumber === 1 ? process.env.BT1_ROLL_ID : process.env.BT2_ROLL_ID}> begins in ${process.env.NOTIFY_BT_BEFORE_TIME} mins, Recall your troops 🪤`,
+        `<@&${BTNumber === 1 ? process.env.BT1_ROLL_ID : process.env.BT2_ROLL_ID}> begins in ${process.env.NOTIFY_BT_BEFORE_TIME || 10} mins, Recall your troops 🪤`,
       )
       .setColor(eBTColor);
     logger.trace(`Triggering BT${BTNumber} code block triggerTrap!`);
