@@ -36,5 +36,5 @@ COPY --from=builder /app/prisma ./prisma
 CMD ["node", "dist/index.js"]
 
 COPY ./docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /usr/local/bin/docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
