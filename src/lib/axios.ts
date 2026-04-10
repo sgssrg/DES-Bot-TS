@@ -1,7 +1,7 @@
 import axios, { AxiosInstance } from "axios";
 
 const LingvaT: AxiosInstance = axios.create({
-  baseURL: process.env.LINGVA_URL || "http://lingvatranslate:3000/api/",
+  baseURL: process.env.LINGVA_URL || "http://lingvatranslate:3000/api",
   headers: { "Content-Type": "application/json" },
 });
 

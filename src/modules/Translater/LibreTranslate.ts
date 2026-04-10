@@ -7,6 +7,7 @@ import { Message } from "discord.js";
 import { LibreT } from "../../lib/axios.js";
 
 const LibreTranslate = async (message: Message, mode: number) => {
+  logger.trace(LibreT);
   // logs the message ID of the referenced message, if it exists
   logger.info(message?.reference?.messageId);
 
@@ -39,9 +40,9 @@ const LibreTranslate = async (message: Message, mode: number) => {
       } catch (err) {
         logger.info("Case 0 is Failed");
         logger.error("Error in fetching referenced message content:" + err);
-        message.reply(
-          `Sorry, I couldn't fetch the original message for language detection.
-            ${err}`,
+        await message.reply(
+          `Sorry, I couldn't detect language of the original message,
+          Reason: ${err}`,
         );
       }
       break;
@@ -75,8 +76,8 @@ const LibreTranslate = async (message: Message, mode: number) => {
       } catch (err) {
         logger.error("Case 1 is Failed");
         logger.error("Error in fetching referenced message content:" + err);
-        message.reply(
-          `Sorry, I couldn't fetch the original message for translation.,
+        await message.reply(
+          `Sorry, I couldn't do translation for the original message.,
           Reason: ${err}`,
         );
       }

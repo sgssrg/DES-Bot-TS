@@ -7,6 +7,8 @@ import fetchReferencedMessage from "../../utils/fetchReferencedMessage.js";
 import { LingvaT } from "../../lib/axios.js";
 
 const LingvaTranslate = async (message: Message, mode: number) => {
+  logger.trace(process.env.LINGVA_URL);
+
   switch (mode) {
     case 0:
       try {
@@ -48,6 +50,10 @@ const LingvaTranslate = async (message: Message, mode: number) => {
         );
       } catch (err) {
         logger.warn(err);
+        await message.reply(
+          `Sorry, I couldn't detect language of the original message,
+          Reason: ${err}`,
+        );
       }
       break;
 
@@ -91,6 +97,10 @@ const LingvaTranslate = async (message: Message, mode: number) => {
         }
       } catch (err) {
         logger.warn(err);
+        await message.reply(
+          `Sorry, I couldn't do translation for the original message.,
+          Reason: ${err}`,
+        );
       }
   }
 };

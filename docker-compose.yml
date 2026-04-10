@@ -6,6 +6,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "0.0.0.0:8080:3000"
+    extra_hosts:
+      - "host.containers.internal:${PRIVATE_IP}"
     environment:
       - NODE_ENV=production
       - DISCORD_TOKEN=${DISCORD_TOKEN}
@@ -25,9 +27,20 @@ services:
       - NOTIFY_BT_BEFORE_TIME=${NOTIFY_BT_BEFORE_TIME}
       - REDEEM_TIME_HOUR=${REDEEM_TIME_HOUR}
       - REDEEM_TIME_MINUTE=${REDEEM_TIME_MINUTE}
+      - LINGVA_URL=${LINGVA_URL}
+      - LIBRE_URL=${LIBRE_URL}
     restart: unless-stopped
     networks:
       - connected
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+        reservations:
+          cpus: "0.25"
+          memory: 128M
+
     depends_on:
       - lingvatranslate
       - libretranslate
@@ -36,16 +49,22 @@ services:
     container_name: lingvatranslate
     image: thedaviddelta/lingva-translate:latest
     restart: always
+    ports:
+      - "0.0.0.0:8081:3000"
     networks:
       - connected
     environment:
+      - site_domain=lingva.ml
       - default_target_lang=en
       - default_source_lang=auto
       - force_default_theme=dark
+
   libretranslate:
     container_name: libretranslate
     image: libretranslate/libretranslate:latest
     restart: always
+    ports:
+      - "0.0.0.0:8082:5000"
     environment:
       - LT_DEFAULT_TO=en
       - LT_DEFAULT_FROM=auto
@@ -55,7 +74,7 @@ services:
       - LT_LOG_LEVEL=info
       - LT_CACHE_DIR=/app/lt_cache
       - LT_MODEL_DIR=/app/models
-      - LT_MODEL_DOWNLOAD_THREADS=6=value
+      - LT_MODEL_DOWNLOAD_THREADS=6
     healthcheck:
       test: ["CMD-SHELL", "./venv/bin/python scripts/healthcheck.py"]
       interval: 10s
@@ -69,11 +88,8 @@ services:
     deploy:
       resources:
         limits:
-          cpus: "0.5"
-          memory: 512M
-        reservations:
           cpus: "0.25"
-          memory: 256M
+          memory: 192M
 
 volumes:
   lt-local:
