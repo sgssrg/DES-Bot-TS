@@ -49,8 +49,6 @@ services:
     container_name: lingvatranslate
     image: thedaviddelta/lingva-translate:latest
     restart: always
-    ports:
-      - "0.0.0.0:8081:3000"
     networks:
       - connected
     environment:
@@ -63,8 +61,6 @@ services:
     container_name: libretranslate
     image: libretranslate/libretranslate:latest
     restart: always
-    ports:
-      - "0.0.0.0:8082:5000"
     environment:
       - LT_DEFAULT_TO=en
       - LT_DEFAULT_FROM=auto
