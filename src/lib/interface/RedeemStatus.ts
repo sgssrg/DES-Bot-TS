@@ -3,5 +3,6 @@ interface RedeemStatus {
   redeemed: number;
   invalid: number;
   total: number;
+  expired: number;
 }
 export { RedeemStatus };

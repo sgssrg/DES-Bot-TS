@@ -124,6 +124,11 @@ const EmbedRedeem = async (
             value: String(redeemStatus?.invalid),
             inline: true,
           },
+          {
+            name: ":melting_face: Expired",
+            value: String(redeemStatus?.expired),
+            inline: true,
+          },
         );
       }
     } // AutoRedeem/ManualRedeem

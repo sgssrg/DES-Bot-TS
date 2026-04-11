@@ -6,6 +6,7 @@ import { getLogger } from "../../../lib/pino.log.js";
 import EmbedRedeem from "./EmbedRedeem.js";
 import { RedeemStatus } from "../../../lib/interface/RedeemStatus.js";
 import { PlayerWithMsgType } from "../../../lib/interface/PlayerWithMsgType.js";
+import { Giftcode } from "../../../generated/prisma/client.js";
 const logger = getLogger(import.meta);
 const RedeemCode = async (
   code: string,
@@ -21,6 +22,7 @@ const RedeemCode = async (
     redeemed: 0,
     invalid: 0,
     total: 0,
+    expired: 0,
   };
   let formattedData: PlayerWithMsgType[] = [];
   for (const [index, playerBulkArr] of chunkedPlayer.entries()) {
@@ -61,6 +63,10 @@ const RedeemCode = async (
             msgTYPE = 2;
             break;
           }
+          default: {
+            msgTYPE = 4;
+            break;
+          }
         }
         let data = {
           PiD: players.accountId,
@@ -72,8 +78,15 @@ const RedeemCode = async (
         if (msgTYPE === 0) RedeemStats.redeemed++;
         if (msgTYPE === 1) RedeemStats.manual++;
         if (msgTYPE === 2) RedeemStats.invalid++;
+        if (msgTYPE === 3) RedeemStats.expired++;
       }
       RedeemStats.total = allPlayers.length;
+
+      // add the code to database
+      let addCode = await prisma.giftcode.create({
+        data: { code: code },
+      });
+      logger.trace(addCode);
     } catch (err) {
       logger.error(err);
     }
@@ -106,6 +119,7 @@ const RedeemCode = async (
             if (channel && channel.isTextBased() && channel.isSendable()) {
               await channel.send({ embeds: [reply] });
             }
+            // await client.send();
           } catch (err) {
             logger.error(err);
           }

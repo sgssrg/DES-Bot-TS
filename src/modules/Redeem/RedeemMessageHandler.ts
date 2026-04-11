@@ -39,7 +39,7 @@ const RedeemMessageHandler = async (message: Message, mode: number) => {
               PFP: player.PFP,
             },
           });
-          console.log(createPlayer);
+          logger.trace(createPlayer);
           let reply = await EmbedRedeem(true, 0, player);
           await message.reply({ embeds: [reply] });
         } else {
